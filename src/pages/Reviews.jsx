@@ -11,7 +11,7 @@ export const Reviews = () => {
       setCurrentRewiews(await getCurrentMovieRewiews(movieId));
     };
     loadCast();
-  }, []);
+  }, [movieId]);
 
   useEffect(() => {
     if (currentRewiews) {
