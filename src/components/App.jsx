@@ -9,9 +9,9 @@ export const App = () => {
     <main>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/movie_details/:movieId/*" element={<MovieDetails />} />
+        <Route path="/goit-react-hw-05-movies/" element={<Home />} />
+        <Route path="/goit-react-hw-05-movies/movies" element={<Movies />} />
+        <Route path="/goit-react-hw-05-movies/movie_details/:movieId/*" element={<MovieDetails />} />
         <Route path="*" element={<>error 404</>}/>
       </Routes>
     </main>

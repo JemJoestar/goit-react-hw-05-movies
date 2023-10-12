@@ -6,7 +6,7 @@ export const MovieCard = ({ movie, location }) => {
   return (
     <li className="movie-item">
       <Link
-        to={`/movie_details/${movie.id}`}
+        to={`/goit-react-hw-05-movies/movie_details/${movie.id}`}
         state={{ from: location }}
         className="movie-link"
       >
