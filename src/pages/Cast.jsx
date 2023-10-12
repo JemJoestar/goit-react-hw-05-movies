@@ -1,4 +1,3 @@
-import { StyledCast } from 'components/MovieDetails.styled';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCurrentMovieCast, setFilmPoster } from 'servises/tmdbApiServise';
@@ -12,9 +11,13 @@ const Cast = () => {
       setCurrentMovieCast(await getCurrentMovieCast(movieId));
     };
     loadCast();
-  }, []);
+  }, [movieId]);
 
-  
+  if(currentMovieCast?.length === 0 ){
+    console.log(`currentMovieCast:`, currentMovieCast)
+    
+    return <p>No info</p>
+  }
   return (
     <div className='cast add-inform-block'>
       <ul className="cast-list">

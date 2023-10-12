@@ -1,4 +1,6 @@
+import { MovieCard } from 'components/MovieCard';
 import { StyledMovies } from 'components/Movies.styled';
+import { SearchForm } from 'components/SearchForm';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { getMovieBySearchReq } from 'servises/tmdbApiServise';
@@ -13,21 +15,28 @@ const Movies = () => {
     setSearchParams({ searchReq: event.target.search.value });
   };
 
-  const preparePromice = async () => {
-    return (
-      (await getMovieBySearchReq(searchParams.get('searchReq'))).results ?? []
-    );
-  };
-
-  const loadMovies = async () => {
-    console.log(`preparePromice:`, preparePromice());
-    const newData = await preparePromice();
-  };
+ 
 
   useEffect(() => {
     if (!searchParams.get('searchReq')) {
       return;
     }
+    setCurrentMoviesArr([]);
+
+    const preparePromice = async () => {
+      return (
+        (await getMovieBySearchReq(searchParams.get('searchReq'))).results ?? []
+      );
+    };
+
+    const loadMovies = async () => {
+      console.log(`preparePromice:`, preparePromice());
+      const newData = await preparePromice();
+      setCurrentMoviesArr(prevState => {
+        return newData;
+      });
+    };
+
     loadMovies();
   }, [searchParams]);
 
@@ -37,14 +46,17 @@ const Movies = () => {
 
   return (
     <StyledMovies>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="search" />
-        <button type="submit">submit</button>
-      </form>
-      <button onClick={loadMovies}>penis</button>
-      <ul>
+      <SearchForm onSubmit={handleSubmit} />
+      <ul className="movie-list">
         {currentMoviesArr &&
-          currentMoviesArr.map(movie => <p>{movie.title}</p>)}
+        currentMoviesArr.length === 0 &&
+        searchParams.get('searchReq') === '' ? (
+          <p>Sorry, there is no movies by your request</p>
+        ) : (
+          currentMoviesArr.map(movie => (
+            <MovieCard movie={movie} location={location} key={movie.id} />
+          ))
+        )}
       </ul>
     </StyledMovies>
   );

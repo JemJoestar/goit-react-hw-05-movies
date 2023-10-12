@@ -10,8 +10,9 @@ export const StyledHome = styled.div`
     list-style: none;
   }
 
-  .popular-movie-item {
+  .movie-item {
     width: 300px;
+    border: 1px solid #000000;
     text-decoration: none;
   }
 `;
