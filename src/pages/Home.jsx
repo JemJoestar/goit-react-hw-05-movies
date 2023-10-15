@@ -1,5 +1,5 @@
 import { StyledHome } from 'components/Home.styled';
-import { MovieCard } from 'components/MovieCard';
+import { MovieList } from 'components/MovieList';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getPopularMovies } from 'servises/tmdbApiServise';
@@ -20,13 +20,7 @@ const Home = () => {
 
   return (
     <StyledHome>
-      <ul className="popular-movie-list">
-        {popularFilms &&
-          popularFilms.results.map(film => (
-            <MovieCard movie={film} location={location} key={film.id}/>
-
-          ))}
-      </ul>
+      <MovieList currentMoviesArr={popularFilms?.results} location={location}/>
     </StyledHome>
   );
 };

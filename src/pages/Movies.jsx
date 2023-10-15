@@ -1,4 +1,4 @@
-import { MovieCard } from 'components/MovieCard';
+import { MovieList } from 'components/MovieList';
 import { StyledMovies } from 'components/Movies.styled';
 import { SearchForm } from 'components/SearchForm';
 import React, { useEffect, useState } from 'react';
@@ -23,15 +23,8 @@ const Movies = () => {
     }
     setCurrentMoviesArr([]);
 
-    const preparePromice = async () => {
-      return (
-        (await getMovieBySearchReq(searchParams.get('searchReq'))).results ?? []
-      );
-    };
-
     const loadMovies = async () => {
-      console.log(`preparePromice:`, preparePromice());
-      const newData = await preparePromice();
+      const newData = await  (await getMovieBySearchReq(searchParams.get('searchReq'))).results ?? []
       setCurrentMoviesArr(prevState => {
         return newData;
       });
@@ -47,17 +40,7 @@ const Movies = () => {
   return (
     <StyledMovies>
       <SearchForm onSubmit={handleSubmit} />
-      <ul className="movie-list">
-        {currentMoviesArr &&
-        currentMoviesArr.length === 0 &&
-        searchParams.get('searchReq') === '' ? (
-          <p>Sorry, there is no movies by your request</p>
-        ) : (
-          currentMoviesArr.map(movie => (
-            <MovieCard movie={movie} location={location} key={movie.id} />
-          ))
-        )}
-      </ul>
+      <MovieList currentMoviesArr={currentMoviesArr} searchParams={searchParams.get('searchReq')} location={location}/>
     </StyledMovies>
   );
 };
